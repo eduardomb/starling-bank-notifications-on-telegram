@@ -2,6 +2,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/webhooks/starling')
-def starling_webhook():
+@app.route('/starling')
+def starling():
     return 'Success'
