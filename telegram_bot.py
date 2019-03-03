@@ -22,7 +22,6 @@ class ChatSession:
     def send_message(self, plain_text):
         payload = {'chat_id': self.chat_id, 'text': plain_text}
         res = self._api_request('sendMessage', payload)
-        print(res.text)
 
     def _api_request(self, command, payload):
         uri = self._API_URI.format(token=self.token, command=command)
