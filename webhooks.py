@@ -7,7 +7,7 @@ from flask import Flask, request, abort
 from telegram_bot import ChatSession
 
 app = Flask(__name__)
-app.config.from_object('settings')
+app.config.from_envvar('ALERT_BOT_SETTINGS')
 
 @app.route('/starling', methods=['POST'])
 def starling():
