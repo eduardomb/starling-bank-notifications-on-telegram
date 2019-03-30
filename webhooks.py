@@ -9,16 +9,17 @@ from telegram_bot import ChatSession
 app = Flask(__name__)
 app.config.from_envvar('ALERT_BOT_SETTINGS')
 
-@app.route('/starling', methods=['POST'])
-def starling():
+@app.route('/starling/<string:account>', methods=['POST'])
+def starling(account):
     def has_valid_signature():
         header_signature = request.headers.get('X-Hook-Signature')
+        secret_key = app.config['STARLING_WEBHOOK_SECRETS'].get(account)
 
-        if not header_signature:
+        if not header_signature or not secret_key:
             return False
 
         m = sha512()
-        m.update(app.config['STARLING_WEBHOOK_SECRET'])
+        m.update(secret_key)
         m.update(request.get_data())
         expected_signature = b64encode(m.digest()).decode()
 
